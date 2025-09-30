@@ -14,8 +14,10 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
-    "plugins": [{ "transform": "typescript-transform-paths" }, 
-                { "transform": "typescript-transform-paths", "afterDeclarations": true }],
+    "plugins": [
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ],
     "paths": {
       "@auth/*": ["src/features/auth/*"],
       "@user/*": ["src/features/user/*"],
@@ -23,11 +25,18 @@
       "@service/*": ["src/shared/services/*"],
       "@socket/*": ["src/shared/sockets/*"],
       "@worker/*": ["src/shared/workers/*"],
-      "@root/*": ["src/*"],
+      "@root/*": ["src/*"]
     }
   },
   "transformers": {
     "before": [{ "transform": "typescript-transform-paths" }],
     "afterDeclarations": [{ "transform": "typescript-transform-paths" }]
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "jest.config.ts"
+  ]
 }
+

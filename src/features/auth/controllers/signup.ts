@@ -56,7 +56,7 @@ export class SignUp {
 
     const userJWT: string = SignUp.prototype.signToken(authData, userObjectId);
     req.session = { jwt: userJWT };
-    res.status(HTTP_STATUS.CREATED).json({ message: 'User Created successfully', user: userDataForCache, token: userJWT });
+    res.status(HTTP_STATUS.CREATED).json({ message: 'User created successfully', user: userDataForCache, token: userJWT });
   }
 
   private signToken(data: IAuthDocument, userObjectId: ObjectId): string {

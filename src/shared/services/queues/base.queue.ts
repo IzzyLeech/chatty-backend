@@ -5,10 +5,11 @@ import { BullAdapter } from '@bull-board/api/bullAdapter';
 import { ExpressAdapter } from '@bull-board/express';
 import { config } from '@root/config';
 import { IAuthJob } from '@auth/interfaces/auth.interface';
+import { IEmailJob } from '@user/interfaces/user.interface';
 
-type IBaseJobData = IAuthJob;
+type IBaseJobData = IAuthJob | IEmailJob;
 
-let BullAdapters: BullAdapter[] = [];
+let bullAdapters: BullAdapter[] = [];
 export let serverAdapter: ExpressAdapter;
 
 export abstract class BaseQueue {
@@ -17,13 +18,13 @@ export abstract class BaseQueue {
 
   constructor(queueName: string) {
     this.queue = new Queue(queueName, `${config.REDIS_HOST}`);
-    BullAdapters.push(new BullAdapter(this.queue));
-    BullAdapters = [...new Set(BullAdapters)];
+    bullAdapters.push(new BullAdapter(this.queue));
+    bullAdapters = [...new Set(bullAdapters)];
     serverAdapter = new ExpressAdapter();
     serverAdapter.setBasePath('/queues');
 
     createBullBoard({
-      queues: BullAdapters,
+      queues: bullAdapters,
       serverAdapter
     });
 
@@ -33,16 +34,16 @@ export abstract class BaseQueue {
       job.remove();
     });
 
-    this.queue.on('Global: completed', (jobId: string) => {
+    this.queue.on('global:completed', (jobId: string) => {
       this.log.info(`Job ${jobId} completed`);
     });
 
-    this.queue.on('Global: stalled', (jobId: string) => {
+    this.queue.on('global:stalled', (jobId: string) => {
       this.log.info(`Job ${jobId} is stalled`);
     });
   }
 
-  protected addJob(name: string, data: any): void {
+  protected addJob(name: string, data: IBaseJobData): void {
     this.queue.add(name, data, { attempts: 3, backoff: { type: 'fixed', delay: 5000 } });
   }
 

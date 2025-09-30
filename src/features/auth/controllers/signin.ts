@@ -7,8 +7,13 @@ import { authService } from '@service/db/auth.service';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { loginSchema } from '@auth/schemes/signin';
 import { IAuthDocument } from '@auth/interfaces/auth.interface';
-import { IUserDocument } from '@user/interfaces/user.interface';
+import { IResetPasswordParams, IUserDocument } from '@user/interfaces/user.interface';
 import { userService } from '@service/db/user.service';
+import { forgotPasswordTemplate } from '@service/emails/templates/forgot-password/forgot-password-template';
+import { emailQueue } from '@service/queues/email.queue';
+import moment from 'moment';
+import publicIp from 'ip';
+import { resetPasswordTemplate } from '@service/emails/templates/reset-password/reset-password-template';
 
 export class SignIn {
   @joiValidation(loginSchema)
@@ -16,12 +21,12 @@ export class SignIn {
     const { username, password } = req.body;
     const existingUser: IAuthDocument = await authService.getAuthUserByUsername(username);
     if (!existingUser) {
-      throw new BadRequestError('Invalid Credentails');
+      throw new BadRequestError('Invalid credentials');
     }
 
     const passwordsMatch: boolean = await existingUser.comparePassword(password);
     if (!passwordsMatch) {
-      throw new BadRequestError('Invalid Credentails');
+      throw new BadRequestError('Invalid credentials');
     }
 
     const user: IUserDocument = await userService.getUserByAuthId(`${existingUser._id}`);
@@ -45,6 +50,14 @@ export class SignIn {
       uId: existingUser!.uId,
       createdAt: existingUser!.createdAt
     } as IUserDocument;
-    res.status(HTTP_STATUS.OK).json({ message: 'User Login successfully', user: userDocument, token: userJwt });
+    const templateParams: IResetPasswordParams = {
+      username: existingUser.username!,
+      email:existingUser.email!,
+      ipaddress: publicIp.address(),
+      date: moment().format('DD/MM/YYYY HH:mm')
+    };
+    const template: string = resetPasswordTemplate.passwordResetConfirmationTemplate(templateParams);
+    emailQueue.addEmailJob('forgotPasswordEmail', {template, receiverEmail: 'lila.casper34@ethereal.email', subject: 'Password reset Confirm'});
+    res.status(HTTP_STATUS.OK).json({ message: 'User login successfully', user: userDocument, token: userJwt });
   }
 }
