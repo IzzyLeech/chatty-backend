@@ -2,8 +2,9 @@ import { BaseCache } from '@service/redis/base.cache';
 import Logger from 'bunyan';
 import { config } from '@root/config';
 import { ServerError } from '@global/helpers/error-handler';
-import { ISavePostToCache, IReactions, IPost } from '@post/interfaces/post.interface';
+import { ISavePostToCache, IPost } from '@post/interfaces/post.interface';
 import { Helpers } from '@global/helpers/helpers';
+import { IReactions } from '@reaction/interfaces/reaction.interface';
 
 const log: Logger = config.createLogger('postCache');
 
