@@ -51,18 +51,18 @@ Accept: application/json
 withCredentials: true
 
 ###
-PUT {{baseUrl}}/{{urlPath}}/post/68dd5b82ba3612a47c93f0bc
+PUT {{baseUrl}}/{{urlPath}}/post/68dd0ef229f9173795253a97
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 {
-    "post": "test for update db",
+    "post": "test for update",
     "bgColor": "#ffffff",
     "privacy": "public",
     "gifUrl": "",
     "profilePicture": "https://res.cloudinary.com/dmxotyyvb/image/upload/v1759061722/68d926d9c24582ef89f6998a",
-    "feelings": ""
+    "feelings": "sad"
 }
 
 ###
