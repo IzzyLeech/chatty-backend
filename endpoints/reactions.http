@@ -10,11 +10,11 @@ withCredentials: true
 {
   "userTo": "68d9933cfb051751cde4b663",
   "postId": "68dd5b92ba3612a47c93f0c0",
-  "type": "love",
-  "previousReaction": "",
+  "type": "like",
+  "previousReaction": "love",
   "postReactions": {
-    "like": 0,
-    "love": 1,
+    "like": 1,
+    "love": 0,
     "happy": 0,
     "sad": 0,
     "wow": 0,

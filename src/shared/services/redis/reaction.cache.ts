@@ -26,17 +26,16 @@ export class ReactionCache extends BaseCache {
       }
 
       if (previousReaction) {
-        this.removePostReactionFromCache(key,reaction.username, postReactions);
+        this.removePostReactionFromCache(key, reaction.username, postReactions);
       }
 
       if (type) {
         await this.client.LPUSH(`reactions:${key}`, JSON.stringify(reaction));
-        const dataToSave: string[] = ['reactions', JSON.stringify(postReactions)];
-        await this.client.HSET(`posts:${key}`, dataToSave);
+        await this.client.HSET(`posts:${key}`, 'reactions', JSON.stringify(postReactions));
       }
     } catch (error) {
       log.error(error);
-      throw new ServerError('Server error. Try again');
+      throw new ServerError('Server error. Try again.');
     }
   }
 
@@ -47,19 +46,18 @@ export class ReactionCache extends BaseCache {
       }
       const response: string[] = await this.client.LRANGE(`reactions:${key}`, 0, -1);
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
-      const userPreviousReaction: IReactionCache = this.getPreviosReaction(response, username) as IReactionCache;
+      const userPreviousReaction: IReactionCache = this.getPreviousReaction(response, username) as IReactionCache;
       multi.LREM(`reactions:${key}`, 1, JSON.stringify(userPreviousReaction));
-      await multi.exex();
+      await multi.exec();
 
-      const dataToSave: string[] = ['reactions', JSON.stringify(postReactions)];
-      await this.client.HSET(`posts:${key}`, dataToSave);
+      await this.client.HSET(`posts:${key}`, 'reactions', JSON.stringify(postReactions));
     } catch (error) {
       log.error(error);
-      throw new ServerError('Server error. Try again');
+      throw new ServerError('Server error. Try again.');
     }
   }
 
-  private getPreviosReaction(response: string[], username: string): IReactionCache | undefined {
+  private getPreviousReaction(response: string[], username: string): IReactionCache | undefined {
     const list: IReactionCache[] = [];
     for (const item of response) {
       list.push(Helpers.parseJson(item) as IReactionCache);
