@@ -1,10 +1,10 @@
-import { config } from '@root/config';
-import { BaseCache } from './base.cache';
+import { BaseCache } from '@service/redis/base.cache';
 import Logger from 'bunyan';
-import { ServerError } from '@global/helpers/error-handler';
-import { IReaction, IReactionCache } from '@reaction/interfaces/reaction.interface';
-import { Helpers } from '@global/helpers/helpers';
 import { find } from 'lodash';
+import { config } from '@root/config';
+import { ServerError } from '@global/helpers/error-handler';
+import { IReactionCache, IReactions } from '@reaction/interfaces/reaction.interface';
+import { Helpers } from '@global/helpers/helpers';
 
 const log: Logger = config.createLogger('reactionsCache');
 
@@ -16,7 +16,7 @@ export class ReactionCache extends BaseCache {
   public async savePostReactionToCache(
     key: string,
     reaction: IReactionCache,
-    postReactions: IReaction,
+    postReactions: IReactions,
     type: string,
     previousReaction: string
   ): Promise<void> {
@@ -39,7 +39,7 @@ export class ReactionCache extends BaseCache {
     }
   }
 
-  public async removePostReactionFromCache(key: string, username: string, postReactions: IReaction): Promise<void> {
+  public async removePostReactionFromCache(key: string, username: string, postReactions: IReactions): Promise<void> {
     try {
       if (!this.client.isOpen) {
         await this.client.connect();

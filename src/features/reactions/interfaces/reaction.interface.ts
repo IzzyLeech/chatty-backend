@@ -34,7 +34,7 @@ export interface IReactionJob {
   userTo?: string;
   userFrom?: string;
   type?: string;
-  reactionObject?: IReactionDocument;
+  reactionObject?: IReactionCache;
 }
 
 export interface IQueryReaction {

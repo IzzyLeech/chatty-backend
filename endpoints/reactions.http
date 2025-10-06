@@ -8,17 +8,25 @@ Accept: application/json
 withCredentials: true
 
 {
-  "userTo": "68e24bd9f9de6c8700e01651",
-  "postId": "68e2955aa66895b62fb8fc96",
-  "type": "love",
-  "previousReaction": "like",
+  "userTo": "68e3b64f276bcc8bad0c3119",
+  "postId": "68e3c8c4ff42813c4a1f0aa7",
+  "type": "happy",
+  "previousReaction": "",
   "postReactions": {
     "like": 0,
-    "love": 1,
-    "happy": 0,
+    "love": 0,
+    "happy": 1,
     "sad": 0,
     "wow": 0,
     "angry": 0
   },
   "profilePicture": "https://res.cloudinary.com/dmxotyyvb/image/upload/v1759061722/68d926d9c24582ef89f6998a"
 }
+
+###
+DELETE  {{baseUrl}}/{{urlPath}}/post/reaction/68e3c8c4ff42813c4a1f0aa7/happy/{"like":0,"love":0,"happy":0,"sad":0,"wow":0,"angry":0}
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{}

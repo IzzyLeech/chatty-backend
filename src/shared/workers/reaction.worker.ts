@@ -3,7 +3,7 @@ import Logger from 'bunyan';
 import { config } from '@root/config';
 import { reactionService } from '@service/db/reaction.service';
 
-const log: Logger = config.createLogger('reactioinWorker');
+const log: Logger = config.createLogger('reactionWorker');
 
 class ReactionWorker {
   async addReactionToDB(job: Job, done: DoneCallback): Promise<void> {

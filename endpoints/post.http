@@ -8,7 +8,7 @@ Accept: application/json
 withCredentials: true
 
 {
-    "post": "Test post for db 3",
+    "post": "Test post for db",
     "bgColor": "#ffffff",
     "privacy": "public",
     "gifUrl": "",
