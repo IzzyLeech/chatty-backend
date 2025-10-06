@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { AuthPayload } from '@auth/interfaces/auth.interface';
-import { IReactionCache, IReactions } from '@reaction/interfaces/reaction.interface';
+import { IReactionCache, IReactionDocument, IReactions } from '@reaction/interfaces/reaction.interface';
 import { IJWT } from './auth.mock';
 // import { ICommentDocument, ICommentNameList } from '@comment/interfaces/comment.interface';
 
@@ -38,7 +38,7 @@ export interface IParams {
   postReactions?: string;
 }
 
-export const reactionData: IReactionCache = {
+export const reactionData: IReactionDocument = {
   _id: '6064861bc25eaa5a5d2f9bf4',
   username: 'Danny',
   postId: '6027f77087c9d9ccb1555268',
@@ -47,7 +47,7 @@ export const reactionData: IReactionCache = {
   createdAt: new Date(),
   userTo: '60263f14648fed5246e322d9',
   type: 'love'
-} as IReactionCache;
+} as IReactionDocument;
 
 // export const commentsData: ICommentDocument = {
 //   _id: '6064861bc25eaa5a5d2f9bf4',
