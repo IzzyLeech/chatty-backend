@@ -1,6 +1,6 @@
 import { BaseCache } from '@service/redis/base.cache';
 import Logger from 'bunyan';
-import { find, result } from 'lodash';
+import { find, } from 'lodash';
 import { config } from '@root/config';
 import { ServerError } from '@global/helpers/error-handler';
 import { IReactionCache, IReactions } from '@reaction/interfaces/reaction.interface';
