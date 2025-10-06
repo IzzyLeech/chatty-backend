@@ -5,7 +5,6 @@ import { ReactionModel } from '@reaction/models/reaction.schema';
 import { UserCache } from '@service/redis/user.cache';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import { omit } from 'lodash'; 
-import mongoose from 'mongoose';
 
 const userCache: UserCache = new UserCache();
 
