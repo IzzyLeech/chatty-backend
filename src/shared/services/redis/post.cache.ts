@@ -2,8 +2,9 @@ import { BaseCache } from '@service/redis/base.cache';
 import Logger from 'bunyan';
 import { config } from '@root/config';
 import { ServerError } from '@global/helpers/error-handler';
-import { ISavePostToCache, IReactions, IPost } from '@post/interfaces/post.interface';
+import { ISavePostToCache, IPost } from '@post/interfaces/post.interface';
 import { Helpers } from '@global/helpers/helpers';
+import { IReactions } from '@reaction/interfaces/reaction.interface';
 
 const log: Logger = config.createLogger('postCache');
 
@@ -321,5 +322,23 @@ public async updatePostInCache(key: string, updatedPost: IPost): Promise<IPost> 
     throw new ServerError('Server error. Try again.');
   }
 }
+
+  public async updatePostReactionsInCache(postId: string, reactions: IReactions): Promise<void> {
+    try {
+      if (!this.client.isOpen) {
+        await this.client.connect();
+      }
+
+      await this.client.HSET(`posts:${postId}`, 'reactions', JSON.stringify(reactions));
+
+      const updated = await this.client.HGET(`posts:${postId}`, 'reactions');
+      if (!updated) {
+        throw new Error(`Failed to update reactions in cache for post ${postId}`);
+      }
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Error updating post reactions in cache');
+    }
+  }
 
 }
