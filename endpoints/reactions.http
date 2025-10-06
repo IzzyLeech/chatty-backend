@@ -8,14 +8,14 @@ Accept: application/json
 withCredentials: true
 
 {
-  "userTo": "68e3b64f276bcc8bad0c3119",
+  "userTo": "68e40974276d6cf35ee12f52",
   "postId": "68e3c8c4ff42813c4a1f0aa7",
-  "type": "happy",
+  "type": "like",
   "previousReaction": "",
   "postReactions": {
-    "like": 0,
+    "like": 1,
     "love": 0,
-    "happy": 1,
+    "happy": 0,
     "sad": 0,
     "wow": 0,
     "angry": 0
@@ -25,6 +25,27 @@ withCredentials: true
 
 ###
 DELETE  {{baseUrl}}/{{urlPath}}/post/reaction/68e3c8c4ff42813c4a1f0aa7/happy/{"like":0,"love":0,"happy":0,"sad":0,"wow":0,"angry":0}
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{}
+###
+GET {{baseUrl}}/{{urlPath}}/post/reaction/68e3c8c4ff42813c4a1f0aa7
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{}
+###
+GET  {{baseUrl}}/{{urlPath}}/post/single/reaction/username/Jebingf/68e3c8c4ff42813c4a1f0aa7
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{}
+###
+GET  {{baseUrl}}/{{urlPath}}/post/reactions/username/Manny
 Content-Type: application/json
 Accept: application/json
 withCredentials: true

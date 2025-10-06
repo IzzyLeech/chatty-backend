@@ -88,7 +88,7 @@ export class ReactionCache extends BaseCache {
       const result: IReactionCache = find(list, (listItem: IReactionCache) => {
         return listItem?.postId === postId && listItem?.username === username;
       }) as IReactionCache;
-      return result ? [result, 0] : [];
+      return result ? [result, 1] : [];
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again');
