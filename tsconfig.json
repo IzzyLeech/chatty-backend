@@ -21,6 +21,7 @@
     "paths": {
       "@auth/*": ["src/features/auth/*"],
       "@comment/*": ["src/features/comment/*"],
+      "@follower/*": ["src/features/followers/*"],
       "@user/*": ["src/features/user/*"],
       "@post/*": ["src/features/post/*"],
       "@reaction/*": ["src/features/reactions/*"],
