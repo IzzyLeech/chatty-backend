@@ -4,7 +4,7 @@ import { find } from 'lodash';
 import { config } from '@root/config';
 import { ServerError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
-import { ICommentCache, ICommentNameList } from '@comment/interfaces/comment.interface';
+import { ICommentCache, ICommentDocument, ICommentNameList } from '@comment/interfaces/comment.interface';
 
 const log: Logger = config.createLogger('commentsCache');
 
@@ -45,16 +45,16 @@ export class CommentCache extends BaseCache {
     }
   }
 
-  public async getCommentsNamesFromCache(postId: string): Promise<ICommentNameList[]> {
+    public async getCommentsNamesFromCache(postId: string): Promise<ICommentNameList[]> {
     try {
       if (!this.client.isOpen) {
         await this.client.connect();
       }
       const commentsCount: number = await this.client.LLEN(`comments:${postId}`);
-      const comments: string[] = await this.client.LRANGE(`commments:${postId}`, 0, -1);
+      const comments: string[] = await this.client.LRANGE(`comments:${postId}`, 0, -1);
       const list: string[] = [];
       for (const item of comments) {
-        const comment: ICommentCache = Helpers.parseJson(item) as ICommentCache;
+        const comment: ICommentDocument = Helpers.parseJson(item) as ICommentDocument;
         list.push(comment.username);
       }
       const response: ICommentNameList = {
@@ -73,7 +73,7 @@ export class CommentCache extends BaseCache {
       if (!this.client.isOpen) {
         await this.client.connect();
       }
-      const comments: string[] = await this.client.LRANGE(`commments:${postId}`, 0, -1);
+      const comments: string[] = await this.client.LRANGE(`comments:${postId}`, 0, -1);
       const list: ICommentCache[] = [];
       for (const item of comments) {
         list.push(Helpers.parseJson(item));
@@ -81,7 +81,7 @@ export class CommentCache extends BaseCache {
       const result: ICommentCache = find(list, (listItem: ICommentCache) => {
         return listItem._id === commentId;
       }) as ICommentCache;
-
+      
       return [result];
     } catch (error) {
       log.error(error);
