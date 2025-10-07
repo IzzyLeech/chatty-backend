@@ -1,10 +1,10 @@
 import { BaseCache } from '@service/redis/base.cache';
 import Logger from 'bunyan';
-import { find, result } from 'lodash';
+import { find } from 'lodash';
 import { config } from '@root/config';
 import { ServerError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
-import { ICommentCache, ICommentDocument, ICommentNameList } from '@comment/interfaces/comment.interface';
+import { ICommentCache, ICommentNameList } from '@comment/interfaces/comment.interface';
 
 const log: Logger = config.createLogger('commentsCache');
 
