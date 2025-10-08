@@ -7,6 +7,7 @@ import { PostModel } from '@post/models/post.schema';
 import mongoose, { Query } from 'mongoose';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import { INotificationDocument } from '@notification/interfaces/notification.interface';
+import { socketIONotificationObject } from '@socket/notification';
 
 const userCache: UserCache = new UserCache();
 
@@ -39,7 +40,8 @@ class CommentService {
                 gifUrl: response[1].gifUrl!,
                 reaction: ''
             });
-            // send to client with socketIO
+            
+            socketIONotificationObject.emit('insert notification', notifications, { userTo });
 
             // send to email queue
         }
