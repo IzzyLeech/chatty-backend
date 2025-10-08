@@ -25,4 +25,16 @@ Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
+###
+PUT {{baseUrl}}/{{urlPath}}/user/block/68e66197398cd84364a6ebed
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/unblock/68e66197398cd84364a6ebed
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
 
