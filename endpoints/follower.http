@@ -7,4 +7,10 @@ Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
+###
+PUT {{baseUrl}}/{{urlPath}}/user/unfollow/68e54bf1447134d75d8d8960/68e54c0a447134d75d8d8967
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
 
