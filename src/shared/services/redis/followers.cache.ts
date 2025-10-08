@@ -1,11 +1,13 @@
 import { UserCache } from '@service/redis/user.cache';
 import { BaseCache } from '@service/redis/base.cache';
 import Logger from 'bunyan';
+import { remove } from 'lodash'
 import { config } from '@root/config';
 import { ServerError } from '@global/helpers/error-handler';
 import { IFollowerData } from '@follower/interfaces/follower.interface';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import mongoose from 'mongoose';
+import { Helpers } from '@global/helpers/helpers';
 
 const log: Logger = config.createLogger('followersCache');
 const userCache: UserCache = new UserCache();
@@ -81,4 +83,27 @@ export class FollowerCache extends BaseCache {
         }
     }
 
+    public async updateBlockedUserPropInCache(key: string, prop: string, value: string, type: 'block' | 'unblock'): Promise<void> {
+        try {
+            if(!this.client.isOpen) {
+                await this.client.connect();
+            }
+
+            const response: string = await this.client.HGET(`users:${key}`, prop) as string;
+            const multi: ReturnType<typeof this.client.multi> = this.client.multi();
+            let blocked: string[] = Helpers.parseJson(response) as string[];
+            if (type === 'block') {
+                blocked = [...blocked, value];
+            } else {
+                remove(blocked, (id: string) => id === value);
+                blocked = [...blocked];
+            }
+            multi.HSET(`users:${key}`, `${prop}`, JSON.stringify(blocked));
+            await multi.exec();
+            
+        } catch (error) {
+            log.error(error);
+            throw new ServerError('Server error. Try again');
+        }
+    }
 }
