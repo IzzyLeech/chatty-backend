@@ -2,7 +2,19 @@
 @urlPath = api/v1
 
 ###
+Put {{baseUrl}}/{{urlPath}}/notification/68e7ab08183972c34fd2087c
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
 DELETE {{baseUrl}}/{{urlPath}}/notification/68e7ab08183972c34fd2087c
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/notifications
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
