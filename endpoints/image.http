@@ -38,3 +38,10 @@ withCredentials: true
 {
     "image": "https://res.cloudinary.com/dmxotyyvb/image/upload/v1759928728/68e66197398cd84364a6ebed"
 }
+
+###
+Get {{baseUrl}}/{{urlPath}}/images/68e66197398cd84364a6ebed
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+

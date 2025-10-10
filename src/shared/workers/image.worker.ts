@@ -57,11 +57,10 @@ class ImageWorker {
   async removeBGImageFromDB(job: Job, done: DoneCallback): Promise<void> {
   try {
     const { key } = job.data;
-    console.log('[removeBGImageFromDB → start]', job.data);
     await imageService.removeBackgroundImageFromDB(key);
-    done();
+    done(null, job.data);
   } catch (error) {
-    console.log('[removeBGImageFromDB → error]', error);
+    log.error(error);
     done(error as Error);
   }
 }
