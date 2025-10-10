@@ -111,6 +111,9 @@ export class UserCache extends BaseCache {
       response.social = Helpers.parseJson(`${response.social}`);
       response.followersCount = Helpers.parseJson(`${response.followersCount}`);
       response.followingCount = Helpers.parseJson(`${response.followingCount}`);
+      response.bgImageVersion = Helpers.parseJson(`${response.bgImageVersion}`);
+      response.bgImageId = Helpers.parseJson(`${response.bgImageId}`);
+      response.profilePicture = Helpers.parseJson(`${response.profilePicture}`);
 
       return response;
     } catch (error) {
