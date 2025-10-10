@@ -1,7 +1,6 @@
 import { DoneCallback, Job } from 'bull';
 import Logger from 'bunyan';
 import { config } from '@root/config';
-import { authService } from '@service/db/auth.service';
 import { imageService } from '@service/db/image.service';
 
 const log: Logger = config.createLogger('imageWorker');
@@ -19,10 +18,10 @@ class ImageWorker {
     }
   }
 
-  async updateBGImageInDB(job: Job, done: DoneCallback): Promise<void> {
+  async updateBGImageToDB(job: Job, done: DoneCallback): Promise<void> {
     try {
-      const { key, value, imgVersion } = job.data;
-      await imageService.addBackgroundImageToDB(key, value,  imgVersion);
+      const { key, imgId, imgVersion } = job.data;
+      await imageService.addBackgroundImageToDB(key, imgId,  imgVersion);
       job.progress(100);
       done(null, job.data);
     } catch (error) {
@@ -33,8 +32,8 @@ class ImageWorker {
 
   async addImageInDB(job: Job, done: DoneCallback): Promise<void> {
     try {
-      const { key, value, imgVersion } = job.data;
-      await imageService.addImage(key, value,  imgVersion, '');
+      const { key, imgId, imgVersion } = job.data;
+      await imageService.addImage(key, imgId,  imgVersion, '');
       job.progress(100);
       done(null, job.data);
     } catch (error) {
@@ -54,6 +53,19 @@ class ImageWorker {
       done(error as Error);
     }
   }
+
+  async removeBGImageFromDB(job: Job, done: DoneCallback): Promise<void> {
+  try {
+    const { key } = job.data;
+    console.log('[removeBGImageFromDB → start]', job.data);
+    await imageService.removeBackgroundImageFromDB(key);
+    done();
+  } catch (error) {
+    console.log('[removeBGImageFromDB → error]', error);
+    done(error as Error);
+  }
+}
+
 }
 
 export const imageWorker: ImageWorker = new ImageWorker();
