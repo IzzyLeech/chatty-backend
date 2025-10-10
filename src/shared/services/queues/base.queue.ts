@@ -12,7 +12,7 @@ import { ICommentJob } from '@comment/interfaces/comment.interface';
 import { IFollowerJobData } from '@follower/interfaces/follower.interface';
 import { INotificationJobData } from '@notification/interfaces/notification.interface';
 
-type IBaseJobData = IAuthJob | IEmailJob | IPostJobData | IReactionJob | ICommentJob | IFollowerJobData | INotificationJobData;
+type IBaseJobData = IAuthJob | IEmailJob | IPostJobData | IReactionJob | ICommentJob | IFollowerJobData | INotificationJobData | IFollowerJobData;
 
 let bullAdapters: BullAdapter[] = [];
 export let serverAdapter: ExpressAdapter;

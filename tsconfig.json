@@ -25,6 +25,7 @@
       "@notification/*": ["src/features/notification/*"],
       "@user/*": ["src/features/user/*"],
       "@post/*": ["src/features/post/*"],
+      "@image/*": ["src/features/images/*"],
       "@reaction/*": ["src/features/reactions/*"],
       "@global/*": ["src/shared/globals/*"],
       "@service/*": ["src/shared/services/*"],
