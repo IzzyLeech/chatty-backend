@@ -18,11 +18,11 @@ export class MessageCache extends BaseCache {
       }
       const userChatList = await this.client.LRANGE(`chatList:${senderId}`, 0, -1);
       if (userChatList.length === 0) {
-        await this.client.RPUSH(`this.addChatList:${senderId}`, JSON.stringify({ receiverId, conversationId }));
+        await this.client.RPUSH(`chatList:${senderId}`, JSON.stringify({ receiverId, conversationId }));
       } else {
         const receiverIndex: number = findIndex(userChatList, (listItem: string) => listItem.includes(receiverId));
         if (receiverIndex < 0) {
-          await this.client.RPUSH(`this.addChatList:${senderId}`, JSON.stringify({ receiverId, conversationId }));
+          await this.client.RPUSH(`chatList:${senderId}`, JSON.stringify({ receiverId, conversationId }));
         }
       }
     } catch (error) {
