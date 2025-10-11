@@ -28,6 +28,7 @@ const config: Config.InitialOptions = {
     '@notification/(.*)': ['<rootDir>/src/features/notification/$1'],
     '@user/(.*)': ['<rootDir>/src/features/user/$1'],
     '@image/(.*)': ['<rootDir>/src/features/images/$1'],
+    '@chat/(.*)': ['<rootDir>/src/features/chat/$1'],
     '@post/(.*)': ['<rootDir>/src/features/post/$1'],
     '@reaction/(.*)': ['<rootDir>/src/features/reactions/$1'],
     '@global/(.*)': ['<rootDir>/src/shared/globals/$1'],
