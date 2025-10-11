@@ -8,7 +8,7 @@ Accept: application/json
 withCredentials: true
 
 {
-    "conversationId": "68ea4f848cf1a36173fbb88c",
+    "conversationId": "",
       "receiverId": "68e661c8398cd84364a6ebfd",
       "receiverUsername": "Janny",
       "receiverAvatarColor": "blue",
