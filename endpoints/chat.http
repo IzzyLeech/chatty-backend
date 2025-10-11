@@ -9,11 +9,11 @@ withCredentials: true
 
 {
     "conversationId": "",
-      "receiverId": "68e661c8398cd84364a6ebfd",
-      "receiverUsername": "Janny",
+      "receiverId": "68e661e2398cd84364a6ec05",
+      "receiverUsername": "Tanny",
       "receiverAvatarColor": "blue",
       "receiverProfilePicture": "https://res.cloudinary.com/dmxotyyvb/image/upload/v1759928759/68e661b6398cd84364a6ebf6",
-      "body": "hello know this",
+      "body": "hello know this tanny",
       "gifUrl": "",
       "isRead": false,
       "selectedImage": ""
@@ -40,3 +40,10 @@ withCredentials: true
     "userOne": "68e66197398cd84364a6ebed",
       "userTwo": "68e661b6398cd84364a6ebf6"
 }
+
+###
+GET {{baseUrl}}/{{urlPath}}/chat/message/conversation-list
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+

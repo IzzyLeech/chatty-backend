@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import { authMiddleware } from '@global/helpers/auth-middleware';
 import { Add } from '@chat/controllers/add-chat-message';
+import { Get } from '@chat/controllers/get-chat-messages';
 
 class ChatRoutes {
     private router: Router;
@@ -13,6 +14,7 @@ class ChatRoutes {
         this.router.post('/chat/message', authMiddleware.checkAuthentication, Add.prototype.message);
         this.router.post('/chat/message/add-chat-users', authMiddleware.checkAuthentication, Add.prototype.addChatUsers);
         this.router.post('/chat/message/remove-chat-users', authMiddleware.checkAuthentication, Add.prototype.removeChatUsers);
+        this.router.get('/chat/message/conversation-list', authMiddleware.checkAuthentication, Get.prototype.conversationList);
 
 
         return this.router;
