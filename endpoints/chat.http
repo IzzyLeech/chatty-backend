@@ -8,12 +8,12 @@ Accept: application/json
 withCredentials: true
 
 {
-    "conversationId": "",
+    "conversationId": "68ea4f848cf1a36173fbb88c",
       "receiverId": "68e661c8398cd84364a6ebfd",
       "receiverUsername": "Janny",
       "receiverAvatarColor": "blue",
       "receiverProfilePicture": "https://res.cloudinary.com/dmxotyyvb/image/upload/v1759928759/68e661b6398cd84364a6ebf6",
-      "body": "wat up bro janny",
+      "body": "hello know this",
       "gifUrl": "",
       "isRead": false,
       "selectedImage": ""

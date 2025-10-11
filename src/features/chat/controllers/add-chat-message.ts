@@ -81,8 +81,9 @@ export class Add {
 
     await messageCache.addChatListToCache(`${req.currentUser!.userId}`, `${receiverId}`, `${conversationObjectId}`);
     await messageCache.addChatListToCache(`${receiverId}`, `${req.currentUser!.userId}`, `${conversationObjectId}`);
-    // add message data to cache
+    await messageCache.addChatMessageToCache(`${conversationObjectId}`, messageData);
     // add message to chat queue
+
     res.status(HTTP_STATUS.OK).json({ message: 'Message added', conversationId: conversationObjectId });
   }
 
