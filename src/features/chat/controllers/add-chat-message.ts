@@ -1,3 +1,4 @@
+import { MessageCache } from './../../../shared/services/redis/message.cache';
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import HTTP_STATUS from 'http-status-codes';
@@ -16,6 +17,7 @@ import { notificationTemplate } from '@service/emails/templates/notifications/no
 import { emailQueue } from '@service/queues/email.queue';
 
 const userCache: UserCache = new UserCache();
+const messageCache: MessageCache = new MessageCache();
 
 export class Add {
   @joiValidation(addChatSchema)
@@ -76,8 +78,9 @@ export class Add {
         messageData
       });
     }
-    // add sender to conversation list in cache
-    // add recevier to chat list in cache
+
+    await messageCache.addChatListToCache(`${req.currentUser!.userId}`, `${receiverId}`, `${conversationObjectId}`);
+    await messageCache.addChatListToCache(`${receiverId}`, `${req.currentUser!.userId}`, `${conversationObjectId}`);
     // add message data to cache
     // add message to chat queue
     res.status(HTTP_STATUS.OK).json({ message: 'Message added', conversationId: conversationObjectId });
