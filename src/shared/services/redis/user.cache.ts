@@ -122,6 +122,51 @@ export class UserCache extends BaseCache {
     }
   }
 
+  public async getUsersFromCache(start: number, end: number, excludedUserKey: string): Promise<IUserDocument[]> {
+    try {
+      if (!this.client.isOpen) {
+        await this.client.connect();
+      }
+      const response = await this.client.ZRANGE('user', start, end, { REV: true });
+      const multi = this.client.multi();
+      for (const key of response) {
+        if (key !== excludedUserKey) {
+          multi.HGETALL(`users:${key}`);
+        }
+      }
+      const execResults = await multi.exec();
+      const userRecords = (execResults ?? [])
+        .filter((record) => !!record && typeof record === 'object')
+        .map((record) => record as unknown as Record<string, string>);
+      const userReplies: Partial<IUserDocument>[] = [];
+      for (const data of userRecords) {
+        const user: Partial<IUserDocument> = {
+          ...data,
+          createdAt: new Date(Helpers.parseJson(`${data.createdAt}`)),
+          postsCount: Helpers.parseJson(`${data.postsCount}`),
+          blocked: Helpers.parseJson(`${data.blocked}`),
+          blockedBy: Helpers.parseJson(`${data.blockedBy}`),
+          notifications: Helpers.parseJson(`${data.notifications}`),
+          social: Helpers.parseJson(`${data.social}`),
+          followersCount: Helpers.parseJson(`${data.followersCount}`),
+          followingCount: Helpers.parseJson(`${data.followingCount}`),
+          bgImageId: Helpers.parseJson(`${data.bgImageId}`),
+          bgImageVersion: Helpers.parseJson(`${data.bgImageVersion}`),
+          profilePicture: Helpers.parseJson(`${data.profilePicture}`),
+          work: Helpers.parseJson(`${data.work}`),
+          school: Helpers.parseJson(`${data.school}`),
+          location: Helpers.parseJson(`${data.location}`),
+          quote: Helpers.parseJson(`${data.quote}`)
+        };
+        userReplies.push(user);
+      }
+      return userReplies as IUserDocument[];
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Server error. Try again.');
+    }
+  }
+
   public async updateSingleUserItemInCache(userId: string, prop: string, value: UserItem): Promise<IUserDocument | null> {
     try {
       if (!this.client.isOpen) {
