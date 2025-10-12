@@ -9,6 +9,7 @@ import { IReaction } from '@reaction/interfaces/reaction.interface';
 
 const log: Logger = config.createLogger('messageCache');
 
+
 export class MessageCache extends BaseCache {
   constructor() {
     super('messageCache');

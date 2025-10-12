@@ -1,4 +1,3 @@
-import { MessageCache } from './../../../shared/services/redis/message.cache';
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import HTTP_STATUS from 'http-status-codes';
@@ -16,6 +15,7 @@ import { INotificationTemplate } from '@notification/interfaces/notification.int
 import { notificationTemplate } from '@service/emails/templates/notifications/notification-templates';
 import { emailQueue } from '@service/queues/email.queue';
 import { chatQueue } from '@service/queues/chat.queue';
+import { MessageCache } from '@service/redis/message.cache';
 
 const userCache: UserCache = new UserCache();
 const messageCache: MessageCache = new MessageCache();
@@ -117,9 +117,9 @@ export class Add {
       };
       const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
       emailQueue.addEmailJob('directMessageEmail', {
-        receiverEmail: currentUser.email,
+        receiverEmail: cachedUser.email!,
         template,
-        subject: `You've received message from ${currentUser.username}`
+        subject: `You've received messages from ${currentUser.username}`
       });
     }
   }
