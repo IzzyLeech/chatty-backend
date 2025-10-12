@@ -13,7 +13,7 @@ withCredentials: true
       "receiverUsername": "Tanny",
       "receiverAvatarColor": "blue",
       "receiverProfilePicture": "https://res.cloudinary.com/dmxotyyvb/image/upload/v1759928759/68e661b6398cd84364a6ebf6",
-      "body": "we see you ",
+      "body": "we see you on monday",
       "gifUrl": "",
       "isRead": false,
       "selectedImage": ""
@@ -58,4 +58,15 @@ DELETE {{baseUrl}}/{{urlPath}}/chat/message/mark-as-deleted/68ea9d05c7646b9e5d30
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+PUT {{baseUrl}}/{{urlPath}}/chat/message/mark-as-read
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "senderId": "68e66197398cd84364a6ebed",
+  "receiverId": "68e661e2398cd84364a6ec05"
+}
 

@@ -64,30 +64,39 @@ class ChatService {
           createdAt: '$result.createdAt'
         }
       },
-      { $sort: { createdAt: 1 }}
+      { $sort: { createdAt: 1 } }
     ]);
     return messages;
   }
 
-  public async getMessages(senderId: ObjectId, receiverId: ObjectId, sort: Record<string, 1 | -1>):Promise<IMessageData[]> {
+  public async getMessages(senderId: ObjectId, receiverId: ObjectId, sort: Record<string, 1 | -1>): Promise<IMessageData[]> {
     const query = {
-        $or: [
-            { senderId, receiverId},
-            { senderId: receiverId, receiverId: senderId},
-        ]
+      $or: [
+        { senderId, receiverId },
+        { senderId: receiverId, receiverId: senderId }
+      ]
     };
-    const messages: IMessageData[] = await MessageModel.aggregate([ {$match: query}, { $sort: sort } ]);
+    const messages: IMessageData[] = await MessageModel.aggregate([{ $match: query }, { $sort: sort }]);
     return messages;
   }
 
   public async markMessageAsDeleted(messageId: string, type: string): Promise<void> {
-    if(type === 'deleteForMe' ) {
-      await MessageModel.updateOne({ _id: messageId }, { $set:{ deleteForMe: true } }).exec();
+    if (type === 'deleteForMe') {
+      await MessageModel.updateOne({ _id: messageId }, { $set: { deleteForMe: true } }).exec();
     } else {
-      await MessageModel.updateOne({ _id: messageId }, { $set:{ deleteForMe: true, deleteForEveryone: true } }).exec();
+      await MessageModel.updateOne({ _id: messageId }, { $set: { deleteForMe: true, deleteForEveryone: true } }).exec();
     }
   }
 
+  public async markMessagesAsRead(senderId: ObjectId, receiverId: ObjectId): Promise<void> {
+    const query = {
+      $or: [
+        { senderId, receiverId, isRead: false },
+        { senderId: receiverId, receiverId: senderId, isRead: false },
+      ]
+    };
+    await MessageModel.updateMany(query, { $set: { isRead: true } }).exec();
+  }
 }
 
 export const chatService: ChatService = new ChatService();
