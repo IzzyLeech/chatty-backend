@@ -49,7 +49,7 @@ export class UserCache extends BaseCache {
       `${avatarColor}`,
       'createdAt',
       `${createdAt}`,
-      'postCount',
+      'postsCount',
       `${postsCount}`
     ];
     const secondList: string[] = [
@@ -195,7 +195,4 @@ export class UserCache extends BaseCache {
       throw new ServerError('Server error. Try again.');
     }
   }
-
-
-
 }
