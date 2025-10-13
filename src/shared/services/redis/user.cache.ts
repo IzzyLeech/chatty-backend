@@ -134,11 +134,13 @@ export class UserCache extends BaseCache {
           multi.HGETALL(`users:${key}`);
         }
       }
+      
       const execResults = await multi.exec();
       const userRecords = (execResults ?? [])
         .filter((record) => !!record && typeof record === 'object')
         .map((record) => record as unknown as Record<string, string>);
       const userReplies: Partial<IUserDocument>[] = [];
+
       for (const data of userRecords) {
         const user: Partial<IUserDocument> = {
           ...data,
