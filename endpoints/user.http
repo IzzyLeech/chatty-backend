@@ -24,3 +24,9 @@ GET {{baseUrl}}/{{urlPath}}/user/profile/posts/Manny/68e66197398cd84364a6ebed/13
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/user/profile/user/suggestions
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
