@@ -4,6 +4,7 @@ import Logger from 'bunyan';
 import { config } from '@root/config';
 import { ServerError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
+import { indexOf, findIndex } from 'lodash';
 
 const log: Logger = config.createLogger('userCache');
 type UserItem = string | ISocialLinks | INotificationSettings;
@@ -163,6 +164,48 @@ export class UserCache extends BaseCache {
         userReplies.push(user);
       }
       return userReplies as IUserDocument[];
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Server error. Try again.');
+    }
+  }
+
+  public async getRamdomUsersFromCache(userId: string, excludedUsername: string): Promise<IUserDocument[]> {
+    try {
+      if (!this.client.isOpen) {
+        await this.client.connect();
+      }
+      const replies: IUserDocument[] = [];
+      const followers: string[] = await this.client.LRANGE(`followers:${userId}`, 0, -1);
+      const users: string[] = await this.client.ZRANGE('user', 0, -1);
+      const randomUsers: string[] = Helpers.shuffle(users).slice(0, 10);
+      for (const key of randomUsers) {
+        const followerIndex = indexOf(followers, key);
+        if (followerIndex < 0) {
+          const userHash: IUserDocument = (await this.client.HGETALL(`users:${key}`)) as unknown as IUserDocument;
+          replies.push(userHash);
+        }
+      }
+      const excludedUsernameIndex: number = findIndex(replies, ['username', excludedUsername]);
+      replies.splice(excludedUsernameIndex, 1);
+      for (const reply of replies) {
+        reply.createdAt = new Date(Helpers.parseJson(`${reply.createdAt}`));
+        reply.postsCount = Helpers.parseJson(`${reply.postsCount}`);
+        reply.blocked = Helpers.parseJson(`${reply.blocked}`);
+        reply.blockedBy = Helpers.parseJson(`${reply.blockedBy}`);
+        reply.notifications = Helpers.parseJson(`${reply.notifications}`);
+        reply.social = Helpers.parseJson(`${reply.social}`);
+        reply.followersCount = Helpers.parseJson(`${reply.followersCount}`);
+        reply.followingCount = Helpers.parseJson(`${reply.followingCount}`);
+        reply.bgImageId = Helpers.parseJson(`${reply.bgImageId}`);
+        reply.bgImageVersion = Helpers.parseJson(`${reply.bgImageVersion}`);
+        reply.profilePicture = Helpers.parseJson(`${reply.profilePicture}`);
+        reply.work = Helpers.parseJson(`${reply.work}`);
+        reply.school = Helpers.parseJson(`${reply.school}`);
+        reply.location = Helpers.parseJson(`${reply.location}`);
+        reply.quote = Helpers.parseJson(`${reply.quote}`);
+      }
+      return replies;
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error. Try again.');
