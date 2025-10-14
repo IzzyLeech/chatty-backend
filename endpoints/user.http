@@ -32,7 +32,19 @@ Accept: application/json
 withCredentials: true
 
 ###
-GET {{baseUrl}}/{{urlPath}}//user/profile/search/
+GET {{baseUrl}}/{{urlPath}}/user/profile/search/
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/profile/change-password
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "currentPassword": "qwerty",
+  "newPassword": "monkey",
+  "confirmPassword": "monkey"
+}
