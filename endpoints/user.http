@@ -74,3 +74,16 @@ withCredentials: true
   "facebook": "https://www.facebook.com/",
   "youtube": "https://www.youtube.com/"
 }
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/profile/settings
+content-type: application/json
+Accept: 'application/json'
+withCredentials: true
+
+{
+  "messages": false,
+  "reactions": true,
+  "comments": false,
+  "follows": true
+}
