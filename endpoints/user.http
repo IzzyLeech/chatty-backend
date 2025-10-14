@@ -48,3 +48,29 @@ withCredentials: true
   "newPassword": "monkey",
   "confirmPassword": "monkey"
 }
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/profile/basic-info
+content-type: application/json
+Accept: 'application/json'
+withCredentials: true
+
+{
+  "quote": "So be it",
+  "work": "fisher",
+  "school": "School of excellence",
+  "location": "The sea"
+}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/profile/social-links
+content-type: application/json
+Accept: 'application/json'
+withCredentials: true
+
+{
+  "instagram": "https://www.instagram.com/",
+  "twitter": "https://x.com/home?lang=en",
+  "facebook": "https://www.facebook.com/",
+  "youtube": "https://www.youtube.com/"
+}
