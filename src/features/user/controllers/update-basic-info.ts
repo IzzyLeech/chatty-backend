@@ -23,7 +23,7 @@ export class Edit {
 
     @joiValidation(socialLinksSchema)
     public async social (req: Request, res: Response): Promise<void> {
-        await userCache.updateSingleUserItemInCache(`${req.currentUser!.userId}`, 'socail', req.body);
+        await userCache.updateSingleUserItemInCache(`${req.currentUser!.userId}`, 'social', req.body);
         userQueue.addUserJob('updateSocialLinksInDB', {
             key: `${req.currentUser!.userId}`,
             value: req.body

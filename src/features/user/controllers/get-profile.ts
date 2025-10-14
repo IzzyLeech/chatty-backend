@@ -38,7 +38,7 @@ export class Get {
       userId: `${req.currentUser!.userId}`
     });
     const followers: IFollowerData[] = await Get.prototype.followers(`${req.currentUser!.userId}`);
-    res.status(HTTP_STATUS.OK).json({ message: 'Get Users', users: allUsers.users, totalUsers: allUsers.totalUsers, followers });
+    res.status(HTTP_STATUS.OK).json({ message: 'Get users', users: allUsers.users, totalUsers: allUsers.totalUsers, followers });
   }
 
   public async profile(req: Request, res: Response): Promise<void> {
@@ -51,7 +51,7 @@ export class Get {
     const { userId } = req.params;
     const cachedUser: IUserDocument = (await userCache.getUserFromCache(userId)) as IUserDocument;
     const existingUser: IUserDocument = cachedUser ? cachedUser : await userService.getUserById(userId);
-    res.status(HTTP_STATUS.OK).json({ message: 'Get user profile', user: existingUser });
+    res.status(HTTP_STATUS.OK).json({ message: 'Get user profile by id', user: existingUser });
   }
 
   public async profileAndPosts(req: Request, res: Response): Promise<void> {
@@ -65,19 +65,19 @@ export class Get {
       ? cachedUserPosts
       : await postService.getPosts({ username: userName }, 0, 100, { createdAt: -1 });
 
-    res.status(HTTP_STATUS.OK).json({ message: 'Get user profile and posts', user: existingUser, post: userPosts });
+    res.status(HTTP_STATUS.OK).json({ message: 'Get user profile and posts', user: existingUser, posts: userPosts });
   }
 
   public async randomUserSuggestions(req: Request, res: Response): Promise<void> {
     let randomUsers: IUserDocument[] = [];
-    const cachedUsers: IUserDocument[] = await userCache.getRamdomUsersFromCache(`${req.currentUser!.userId}`, req.currentUser!.username);
+    const cachedUsers: IUserDocument[] = await userCache.getRandomUsersFromCache(`${req.currentUser!.userId}`, req.currentUser!.username);
     if(cachedUsers.length) {
       randomUsers = [...cachedUsers];
     } else {
       const users: IUserDocument[] = await userService.getRandomUsers(req.currentUser!.userId);
       randomUsers = [...users];
     }
-    res.status(HTTP_STATUS.OK).json({ message: 'User suggestions', user: randomUsers });
+    res.status(HTTP_STATUS.OK).json({ message: 'User suggestions', users: randomUsers });
   }
 
   private async allUsers({ newSkip, limit, skip, userId }: IUserAll): Promise<IAllUsers> {

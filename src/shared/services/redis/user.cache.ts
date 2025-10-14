@@ -147,7 +147,7 @@ export class UserCache extends BaseCache {
     }
   }
 
-  public async getRamdomUsersFromCache(userId: string, excludedUsername: string): Promise<IUserDocument[]> {
+  public async getRandomUsersFromCache(userId: string, excludedUsername: string): Promise<IUserDocument[]> {
     try {
       if (!this.client.isOpen) {
         await this.client.connect();

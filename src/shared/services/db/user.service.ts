@@ -11,7 +11,7 @@ class UserService {
   }
 
   public async updatePassword(username: string, hashedPassword: string): Promise<void> {
-    await AuthModel.updateOne({ _id: username }, { $set: { password: hashedPassword } }).exec();
+    await AuthModel.updateOne({ username }, { $set: { password: hashedPassword } }).exec();
   }
 
   public async updateUserInfo(userId: string, info: IBasicInfo): Promise<void> {

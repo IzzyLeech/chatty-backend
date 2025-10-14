@@ -26,7 +26,7 @@ export class Update {
     }
 
     const hashedPassword: string = await existingUser.hashPassword(newPassword);
-    userService.updatePassword(`${req.currentUser!.userId}`, hashedPassword);
+    userService.updatePassword(`${req.currentUser!.username}`, hashedPassword);
     
     const templateParmas: IResetPasswordParams = {
       username: existingUser.username!,
