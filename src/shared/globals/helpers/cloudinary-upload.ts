@@ -22,7 +22,7 @@ export function uploads(
   });
 }
 
-export function vidoeUpload(
+export function videoUpload(
   file: string,
   public_id?: string,
   overwrite?: boolean,
