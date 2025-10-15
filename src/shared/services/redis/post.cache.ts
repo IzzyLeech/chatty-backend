@@ -184,6 +184,56 @@ export class PostCache extends BaseCache {
     }
   }
 
+public async getPostsWithVideoFromCache(key: string, start: number, end: number): Promise<IPost[]> {
+    try {
+      if (!this.client.isOpen) {
+        await this.client.connect();
+      }
+
+      const postIds: string[] = await this.client.ZRANGE(key, start, end, { REV: true });
+      const multi = this.client.multi();
+      for (const id of postIds) {
+        multi.HGETALL(`posts:${id}`);
+      }
+
+      const rawReplies = (await multi.exec()) as unknown[];
+      const postWithVideos: IPost[] = [];
+
+      for (const raw of rawReplies) {
+        const data = raw as Record<string, string>;
+
+        if ((data.videoId && data.videoVersion)) {
+          const post: IPost = {
+            _id: data._id!,
+            userId: data.userId!,
+            username: data.username!,
+            email: data.email!,
+            avatarColor: data.avatarColor!,
+            profilePicture: data.profilePicture!,
+            post: data.post!,
+            bgColor: data.bgColor!,
+            feelings: data.feelings ?? '',
+            privacy: data.privacy ?? '',
+            gifUrl: data.gifUrl ?? '',
+            commentsCount: parseInt(data.commentsCount ?? '0', 10),
+            reactions: JSON.parse(data.reactions ?? '{}') as IReactions,
+            imgVersion: data.imgVersion ?? '',
+            imgId: data.imgId ?? '',
+            videoId: data.videoId ?? '',
+            videoVersion: data.videoVersion ?? '',
+            createdAt: new Date(data.createdAt ?? Date.now())
+          };
+          postWithVideos.push(post);
+        }
+      }
+
+      return postWithVideos;
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Server error. Try again');
+    }
+  }
+
  public async getUserPostsFromCache(key: string,uId: number): Promise<IPost[]> {
   try {
     if (!this.client.isOpen) {
