@@ -98,3 +98,10 @@ withCredentials: true
     "feelings": "happy",
     "video": ""
 }
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/videos/1
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
