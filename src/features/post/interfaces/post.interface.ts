@@ -32,6 +32,7 @@ export interface IGetPostsQuery {
   username?: string;
   imgId?: string;
   gifUrl?: string;
+  videoId?: string;
 }
 
 export interface ISavePostToCache {
