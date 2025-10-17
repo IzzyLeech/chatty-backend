@@ -44,7 +44,6 @@ class Application {
 
     process.on('exit', () => {
       log.error('Exiting');
-
     });
   }
 
