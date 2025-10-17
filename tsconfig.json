@@ -1,24 +1,49 @@
 {
-    "compilerOptions": {
-      "target": "es2015",
-      "module": "commonjs",
-      "lib": ["DOM", "ES2015"],
-      "baseUrl": ".",
-      "outDir": "./build",
-      "rootDir": "src",
-      "strict": true,
-      "noImplicitAny": true,
-      "noUnusedLocals": false,
-      "noUnusedParameters": false,
-      "moduleResolution": "node",
-      "esModuleInterop": true,
-      "sourceMap": true,
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
-      "forceConsistentCasingInFileNames": true,
-      "allowSyntheticDefaultImports": true,
-      "pretty": true,
-      "resolveJsonModule": true
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "lib": ["DOM", "ES2015"],
+    "baseUrl": ".",
+    "outDir": "./build",
+    "rootDir": "src",
+    "strict": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "plugins": [
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ],
+    "paths": {
+      "@auth/*": ["src/features/auth/*"],
+      "@comment/*": ["src/features/comment/*"],
+      "@follower/*": ["src/features/followers/*"],
+      "@notification/*": ["src/features/notification/*"],
+      "@user/*": ["src/features/user/*"],
+      "@post/*": ["src/features/post/*"],
+      "@chat/*": ["src/features/chat/*"],
+      "@image/*": ["src/features/images/*"],
+      "@reaction/*": ["src/features/reactions/*"],
+      "@global/*": ["src/shared/globals/*"],
+      "@service/*": ["src/shared/services/*"],
+      "@socket/*": ["src/shared/sockets/*"],
+      "@worker/*": ["src/shared/workers/*"],
+      "@root/*": ["src/*"]
     }
-  }
-  
+  },
+  "transformers": {
+    "before": [{ "transform": "typescript-transform-paths" }],
+    "afterDeclarations": [{ "transform": "typescript-transform-paths" }]
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "jest.config.ts"
+  ]
+}
+

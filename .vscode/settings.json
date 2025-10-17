@@ -1,0 +1,17 @@
+{
+    "cSpell.words": [
+        "Credentails",
+        "followee",
+        "HGETALL",
+        "HMGET",
+        "HSET",
+        "LPUSH",
+        "LRANGE",
+        "LREM",
+        "ZADD",
+        "ZCARD",
+        "ZCOUNT",
+        "ZRANGE",
+        "ZREM"
+    ]
+}
