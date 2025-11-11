@@ -148,7 +148,7 @@ class FollowerService {
           username: '$authId.username',
           avatarColor: '$authId.avatarColor',
           uId: '$authId.uId',
-          postCount: '$followeeId.postsCount',
+          postsCount: '$followerId.postsCount',
           followersCount: '$followerId.followersCount',
           followingCount: '$followerId.followingCount',
           profilePicture: '$followerId.profilePicture',

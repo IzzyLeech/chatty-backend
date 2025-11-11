@@ -25,7 +25,7 @@ export interface IFollowerData {
   followersCount: number;
   followingCount: number;
   profilePicture: string;
-  postCount: number;
+  postsCount: number;
   username: string;
   uId: string;
   _id?: mongoose.Types.ObjectId;
