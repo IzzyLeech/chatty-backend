@@ -8,11 +8,11 @@ Accept: application/json
 withCredentials: true
 
 {
-    "conversationId": "68ea9d05c7646b9e5d302928",
-      "receiverId": "68e661e2398cd84364a6ec05",
-      "receiverUsername": "Tanny",
+    "conversationId": "69209b043bc2dc898a9b18fd",
+      "receiverId": "69133d94bce0d2d742db48df",
+      "receiverUsername": "Danny",
       "receiverAvatarColor": "blue",
-      "receiverProfilePicture": "https://res.cloudinary.com/dmxotyyvb/image/upload/v1759928759/68e661b6398cd84364a6ebf6",
+      "receiverProfilePicture": "https://res.cloudinary.com/dmxotyyvb/image/upload/v1762868630/69133d94bce0d2d742db48df",
       "body": "we see you on monday",
       "gifUrl": "",
       "isRead": false,
@@ -48,7 +48,7 @@ Accept: application/json
 withCredentials: true
 
 ###
-GET {{baseUrl}}/{{urlPath}}/chat/message/user/68e661e2398cd84364a6ec05
+GET {{baseUrl}}/{{urlPath}}/chat/message/user/69133d94bce0d2d742db48df
 Content-Type: application/json
 Accept: application/json
 withCredentials: true

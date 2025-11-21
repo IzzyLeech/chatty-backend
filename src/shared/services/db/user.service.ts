@@ -123,7 +123,7 @@ class UserService {
           username: 1,
           email: 1,
           avatarColor: 1,
-          profilePicture: 1
+          profilePicture: '$user.profilePicture'
         }
       }
     ]);
