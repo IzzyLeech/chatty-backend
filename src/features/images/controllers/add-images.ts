@@ -19,7 +19,7 @@ export class Add {
   public async profileImage(req: Request, res: Response): Promise<void> {
     const result: UploadApiResponse = (await uploads(req.body.image, req.currentUser!.userId, true, true)) as UploadApiResponse;
     if (!result?.public_id) {
-      throw new BadRequestError('File upload: Erro occurred. Try again.');
+      throw new BadRequestError('File upload: Error occurred. Try again.');
     }
     const url = `https://res.cloudinary.com/dmxotyyvb/image/upload/v${result.version}/${result.public_id}`;
     const cachedUser: IUserDocument | null = (await userCache.updateSingleUserItemInCache(
@@ -50,12 +50,11 @@ export class Add {
       'bgImageVersion',
       version
     ) as Promise<IUserDocument>;
-    const response: [IUserDocument, IUserDocument] = await Promise.all([bgImageId, bgImageVersion]) as [IUserDocument, IUserDocument];
-
+    const response: [IUserDocument, IUserDocument] = (await Promise.all([bgImageId, bgImageVersion])) as [IUserDocument, IUserDocument];
     socketIOImageObject.emit('update user', {
-        bgImageId: publicId,
-        bgImageVersion: version,
-        userId: response[0]
+      bgImageId: publicId,
+      bgImageVersion: version,
+      userId: response[0]
     });
     imageQueue.addImageJob('updateBGImageToDB', {
       key: `${req.currentUser!.userId}`,
@@ -66,19 +65,19 @@ export class Add {
   }
 
   private async backgroundUpload(image: string): Promise<IBgUploadResponse> {
-    const isDataUrl = Helpers.isDataUrl(image);
+    const isDataURL = Helpers.isDataURL(image);
     let version = '';
     let publicId = '';
-    if (isDataUrl) {
-        const result: UploadApiResponse = (await uploads(image)) as UploadApiResponse;
-        if(!result.public_id) {
-            throw new BadRequestError(result.message);
-        } else {
-            version = result.version.toString();
-            publicId = result.public_id;
-        }
+    if (isDataURL) {
+      const result: UploadApiResponse = (await uploads(image)) as UploadApiResponse;
+      if (!result.public_id) {
+        throw new BadRequestError(result.message);
+      } else {
+        version = result.version.toString();
+        publicId = result.public_id;
+      }
     } else {
-        const value = image.split('/');
+      const value = image.split('/');
       version = value[value.length - 2];
       publicId = value[value.length - 1];
     }

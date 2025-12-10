@@ -8,12 +8,12 @@ Accept: application/json
 withCredentials: true
 
 {
-    "conversationId": "69209b043bc2dc898a9b18fd",
-      "receiverId": "69133d94bce0d2d742db48df",
-      "receiverUsername": "Danny",
-      "receiverAvatarColor": "blue",
-      "receiverProfilePicture": "https://res.cloudinary.com/dmxotyyvb/image/upload/v1762868630/69133d94bce0d2d742db48df",
-      "body": "we see you on monday",
+    "conversationId": "",
+      "receiverId": "6913798b832b3a61c5f5a2f7",
+      "receiverUsername": "Bleakly",
+      "receiverAvatarColor": "#6a1b9a",
+      "receiverProfilePicture": "https://res.cloudinary.com/dmxotyyvb/image/upload/v1762883980/6913798b832b3a61c5f5a2f7",
+      "body": "what's good",
       "gifUrl": "",
       "isRead": false,
       "selectedImage": ""

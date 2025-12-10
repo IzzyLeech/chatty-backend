@@ -31,7 +31,7 @@ export class MessageCache extends BaseCache {
       }
     } catch (error) {
       log.error(error);
-      throw new ServerError('Server error, Tryt again');
+      throw new ServerError('Server error, Try again');
     }
   }
 
@@ -43,7 +43,7 @@ export class MessageCache extends BaseCache {
       await this.client.RPUSH(`messages:${conversationId}`, JSON.stringify(value));
     } catch (error) {
       log.error(error);
-      throw new ServerError('Server error, Tryt again');
+      throw new ServerError('Server error, Try again');
     }
   }
 
@@ -64,7 +64,7 @@ export class MessageCache extends BaseCache {
       return chatUsers;
     } catch (error) {
       log.error(error);
-      throw new ServerError('Server error, Tryt again');
+      throw new ServerError('Server error, Try again');
     }
   }
 
@@ -85,7 +85,7 @@ export class MessageCache extends BaseCache {
       return chatUsers;
     } catch (error) {
       log.error(error);
-      throw new ServerError('Server error, Tryt again');
+      throw new ServerError('Server error, Try again');
     }
   }
 

@@ -33,7 +33,7 @@ class ImageService {
     return image;
   }
 
-  public async getImage(userId: string): Promise<IFileImageDocument[]> {
+  public async getImages(userId: string): Promise<IFileImageDocument[]> {
     const images: IFileImageDocument[] = await ImageModel.aggregate([{ $match: { userId: new mongoose.Types.ObjectId(userId) } }]);
     return images;
   }
